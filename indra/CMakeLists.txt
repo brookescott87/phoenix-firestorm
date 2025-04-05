@@ -193,3 +193,7 @@ if (LL_TESTS)
   add_subdirectory(${INTEGRATION_TESTS_PREFIX}integration_tests)
 endif (LL_TESTS)
 
+if (WINDOWS)
+    # Files needed for VS to work properly
+    file(COPY Directory.build.props DESTINATION ${CMAKE_BINARY_DIR})
+endif (WINDOWS)
