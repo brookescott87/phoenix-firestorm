@@ -494,7 +494,7 @@ if [ $WANTS_CONFIG -eq $TRUE ] ; then
         TRACY_PROFILER="-DUSE_TRACY:BOOL=ON"
     else
         TRACY_PROFILER="-DUSE_TRACY:BOOL=OFF"
-    fi   
+    fi
     if [ $WANTS_TESTBUILD -eq $TRUE ] ; then
         TESTBUILD="-DTESTBUILD:BOOL=ON -DTESTBUILDPERIOD:STRING=$TESTBUILD_PERIOD"
     else
@@ -600,7 +600,10 @@ if [ $WANTS_CONFIG -eq $TRUE ] ; then
     if [ $? -ne 0 ]; then
         echo "Configure failed!"
         exit 1
-    fi    
+    fi
+    if [ $TARGET_PLATFORM == "windows" ] ; then
+        python3 ../scripts/fixup_vs_proj_refs.py newview/firestorm-bin.vcxproj
+    fi
 fi
 if [ $WANTS_BUILD -eq $TRUE ] ; then
     echo "Building $TARGET_PLATFORM..."
@@ -630,7 +633,7 @@ if [ $WANTS_BUILD -eq $TRUE ] ; then
     if [ $? -ne 0 ]; then
         echo "Build failed!"
         exit 1
-    fi    
+    fi
 fi
 echo "finished"
 exit 0
