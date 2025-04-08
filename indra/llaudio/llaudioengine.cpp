@@ -1231,7 +1231,9 @@ void LLAudioEngine::assetCallback(const LLUUID &uuid, LLAssetType::EType type, v
 {
     if (!gAudiop)
     {
+#if !LL_LINUX && (defined(LL_FMODSTUDIO) || defined(LL_OPENAL))
         LL_WARNS("AudioEngine") << "LLAudioEngine instance doesn't exist!" << LL_ENDL;
+#endif
         return;
     }
 
@@ -1484,7 +1486,9 @@ bool LLAudioSource::setupChannel()
 
     if (!gAudiop)
     {
+#if !LL_LINUX && (defined(LL_FMODSTUDIO) || defined(LL_OPENAL))
         LL_WARNS("AudioEngine") << "LLAudioEngine instance doesn't exist!" << LL_ENDL;
+#endif
         return false;
     }
 
@@ -1550,7 +1554,9 @@ bool LLAudioSource::play(const LLUUID &audio_uuid)
 
     if (!gAudiop)
     {
+#if !LL_LINUX && (defined(LL_FMODSTUDIO) || defined(LL_OPENAL))
         LL_WARNS("AudioEngine") << "LLAudioEngine instance doesn't exist!" << LL_ENDL;
+#endif
         return false;
     }
 
@@ -1666,7 +1672,9 @@ void LLAudioSource::addAudioData(LLAudioData *adp, const bool set_current)
 
     if (!gAudiop)
     {
+#if !LL_LINUX && (defined(LL_FMODSTUDIO) || defined(LL_OPENAL))
         LL_WARNS("AudioEngine") << "LLAudioEngine instance doesn't exist!" << LL_ENDL;
+#endif
         return;
     }
 
@@ -1840,7 +1848,9 @@ bool LLAudioChannel::updateBuffer()
 {
     if (!gAudiop)
     {
+#if !LL_LINUX && (defined(LL_FMODSTUDIO) || defined(LL_OPENAL))
         LL_WARNS("AudioEngine") << "LLAudioEngine instance doesn't exist!" << LL_ENDL;
+#endif
         return false;
     }
 
@@ -1913,7 +1923,9 @@ LLAudioData::LLAudioData(const LLUUID &uuid) :
 
     if (!gAudiop)
     {
+#if !LL_LINUX && (defined(LL_FMODSTUDIO) || defined(LL_OPENAL))
         LL_WARNS("AudioEngine") << "LLAudioEngine instance doesn't exist!" << LL_ENDL;
+#endif
         return;
     }
 
@@ -1944,7 +1956,9 @@ bool LLAudioData::load()
 
     if (!gAudiop)
     {
+#if !LL_LINUX && (defined(LL_FMODSTUDIO) || defined(LL_OPENAL))
         LL_WARNS("AudioEngine") << "LLAudioEngine instance doesn't exist!" << LL_ENDL;
+#endif
         mHasWAVLoadFailed = true;
         return false;
     }

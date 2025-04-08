@@ -101,7 +101,9 @@ void LLViewerAudio::startInternetStreamWithAutoFade(const std::string &streamURI
 
     if (!gAudiop)
     {
+#if !LL_LINUX && (defined(LL_FMODSTUDIO) || defined(LL_OPENAL))
         LL_WARNS("AudioEngine") << "LLAudioEngine instance doesn't exist!" << LL_ENDL;
+#endif
         return;
     }
 
@@ -684,7 +686,9 @@ void audio_update_wind(bool force_update)
 
         if (!gAudiop)
         {
+#if !LL_LINUX && (defined(LL_FMODSTUDIO) || defined(LL_OPENAL))
             LL_WARNS("AudioEngine") << "LLAudioEngine instance doesn't exist!" << LL_ENDL;
+#endif
             return;
         }
 

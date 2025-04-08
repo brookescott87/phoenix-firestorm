@@ -4689,7 +4689,7 @@ void process_sound_trigger(LLMessageSystem *msg, void **)
 {
     if (!gAudiop)
     {
-#if !LL_LINUX
+#if !LL_LINUX && (defined(LL_FMODSTUDIO) || defined(LL_OPENAL))
         LL_WARNS("AudioEngine") << "LLAudioEngine instance doesn't exist!" << LL_ENDL;
 #endif
         return;
@@ -4808,7 +4808,7 @@ void process_preload_sound(LLMessageSystem *msg, void **user_data)
 {
     if (!gAudiop)
     {
-#if !LL_LINUX
+#if !LL_LINUX && (defined(LL_FMODSTUDIO) || defined(LL_OPENAL))
         LL_WARNS("AudioEngine") << "LLAudioEngine instance doesn't exist!" << LL_ENDL;
 #endif
         return;
