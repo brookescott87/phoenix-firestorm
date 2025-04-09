@@ -4555,21 +4555,7 @@ void FSPanelFace::onCopyTexture()
                     bool from_library = get_is_predefined_texture(id);
                     bool full_perm = from_library;
 
-                    if (!full_perm
-                        && objectp->permCopy()
-                        && objectp->permTransfer()
-                        && objectp->permModify())
-                    {
-                        // If agent created this object and nothing is limiting permissions, mark as full perm
-                        // If agent was granted permission to edit objects owned and created by somebody else, mark full perm
-                        // This check is not perfect since we can't figure out whom textures belong to so this ended up restrictive
-                        std::string creator_app_link;
-                        LLUUID creator_id;
-                        LLSelectMgr::getInstance()->selectGetCreator(creator_id, creator_app_link);
-                        full_perm = objectp->mOwnerID == creator_id;
-                    }
-
-                    if (id.notNull() && !full_perm)
+                    if (id.notNull())
                     {
                         std::map<LLUUID, LLUUID>::iterator iter = asset_item_map.find(id);
                         if (iter != asset_item_map.end())

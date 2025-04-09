@@ -192,6 +192,7 @@ LLFloaterTexturePicker::LLFloaterTexturePicker(
     mCanApplyImmediately = can_apply_immediately;
     buildFromFile("floater_texture_ctrl.xml");
     setCanMinimize(false);
+    setImageID(image_asset_id);
 }
 
 LLFloaterTexturePicker::~LLFloaterTexturePicker()
@@ -200,6 +201,7 @@ LLFloaterTexturePicker::~LLFloaterTexturePicker()
 
 void LLFloaterTexturePicker::setImageID(const LLUUID& image_id, bool set_selection /*=true*/)
 {
+    getChild<LLLineEditor>("TextureKey")->setText(image_id.asString());
     if( ((mImageAssetID != image_id) || mTentative) && mActive)
     {
         mNoCopyTextureSelected = false;
@@ -257,44 +259,6 @@ void LLFloaterTexturePicker::setImageID(const LLUUID& image_id, bool set_selecti
             if (item_id.isNull())
             {
                 mInventoryPanel->getRootFolder()->clearSelection();
-                //<FS:Chaser> Clear out the UUID instead of keeping the last value
-                getChild<LLLineEditor>("TextureKey")->setText(LLUUID::null.asString());
-                //</FS:Chaser>
-            }
-            else
-            {
-                LLInventoryItem* itemp = gInventory.getItem(item_id);
-                //<FS:Chaser> Texture UUID picker
-                //if (itemp && !itemp->getPermissions().allowCopyBy(gAgent.getID()))
-                if (itemp)
-                {
-                    bool copy = itemp->getPermissions().allowCopyBy(gAgent.getID());
-                    bool mod = itemp->getPermissions().allowModifyBy(gAgent.getID());
-                    bool xfer = itemp->getPermissions().allowOperationBy(PERM_TRANSFER, gAgent.getID());
-
-                    if(!copy)
-                    {
-                        // no copy texture
-                        getChild<LLUICtrl>("apply_immediate_check")->setValue(false);
-                        mNoCopyTextureSelected = true;
-                    }
-
-                    //Verify permissions before revealing UUID.
-                    //Replicates behaviour of "Copy UUID" on inventory. If you can't copy it there, you can't copy it here.
-                    if(copy&&mod&&xfer)
-                    {
-                        getChild<LLLineEditor>("TextureKey")->setText(image_id.asString());
-                    }
-                    else
-                    {
-                        getChild<LLLineEditor>("TextureKey")->setText(LLUUID::null.asString());
-                    }
-                }
-                else
-                {
-                    getChild<LLLineEditor>("TextureKey")->setText(LLUUID::null.asString());
-                }
-                // </FS:Chaser>
             }
 
             if (set_selection)
