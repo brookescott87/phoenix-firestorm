@@ -842,21 +842,21 @@ const LLUUID& LLFloaterTexturePicker::findItemID(const LLUUID& asset_id, bool co
         return LLUUID::null;
     }
 
-    LLUUID loockup_id = asset_id;
-    if (mInventoryPickType == PICK_MATERIAL && loockup_id == BLANK_MATERIAL_ASSET_ID)
+    LLUUID lookup_id = asset_id;
+    if (mInventoryPickType == PICK_MATERIAL && lookup_id == BLANK_MATERIAL_ASSET_ID)
     {
         // default asset id means we are looking for an inventory item with a default asset UUID (null)
-        loockup_id = LLUUID::null;
+        lookup_id = LLUUID::null;
     }
 
     LLViewerInventoryCategory::cat_array_t cats;
     LLViewerInventoryItem::item_array_t items;
 
-    if (loockup_id.isNull())
+    if (lookup_id.isNull())
     {
         // looking for a material with a null id, null id is shared by a lot
         // of objects as a default value, so have to filter by type as well
-        LLAssetIDAndTypeMatches matches(loockup_id, LLAssetType::AT_MATERIAL);
+        LLAssetIDAndTypeMatches matches(lookup_id, LLAssetType::AT_MATERIAL);
         gInventory.collectDescendentsIf(LLUUID::null,
                                         cats,
                                         items,
@@ -865,7 +865,7 @@ const LLUUID& LLFloaterTexturePicker::findItemID(const LLUUID& asset_id, bool co
     }
     else
     {
-        LLAssetIDMatches asset_id_matches(loockup_id);
+        LLAssetIDMatches asset_id_matches(lookup_id);
         gInventory.collectDescendentsIf(LLUUID::null,
                                         cats,
                                         items,
